@@ -6,7 +6,7 @@ Easily install FusionBPX on Debian Wheezy
 
 ###Description
 
-Install FusionBPX from the [official repository](https://code.google.com/p/fusionpbx/) along with the appropriate Debian Wheezy packages.
+Install FusionBPX from the [official repository](https://code.google.com/p/fusionpbx/) along with [Freeswitch](http://www.freeswitch.org/) and the required Debian Wheezy packages.
 
 ###Usage
 
