@@ -40,7 +40,7 @@ function use {
 
 # DEFAULTS
 
-CONFOPT="--prefix=/usr/local/freeswitch"
+CONFOPT="--prefix=/usr/local/freeswitch --enable-zrtp"
 
 # OPTIONS CHECKS
 
@@ -98,16 +98,28 @@ NGINX="nginx nginx-full nginx-common php5-fpm php5-common php5-gd php-pear php5-
 
 case "$web" in
 	apache)
+		if [ -n "`which nginx`" ]; then
+			update-rc.d nginx disable
+		fi
+		if [ -n "`pidof nginx`" ]; then
+			service nginx stop
+		fi
 		apt-get install -y $APACHE
 	;;
 	nginx)
+		if [ -n "`which apache2`" ]; then
+			update-rc.d apache2 disable
+		fi
+		if [ -n "`pidof apache2`" ]; then
+			service apache2 stop
+		fi
 		apt-get install -y $NGINX
 	;;
 esac
 
 DEBBASE="git-core subversion build-essential autoconf automake libtool libncurses5 libncurses5-dev make libjpeg8-dev pkg-config libcurl4-openssl-dev libexpat1-dev libgnutls-dev libtiff4-dev libx11-dev libssl-dev python2.7-dev zlib1g-dev libzrtpcpp-dev libasound2-dev libogg-dev libvorbis-dev libperl-dev libgdbm-dev libdb-dev python-dev uuid-dev bison ssl-cert"
 DEBPSQL="postgresql-9.1 postgresql-client-9.1 postgresql-client-common postgresql-common libpq5 libpq-dev php5-pgsql"
-DEBSQLL="libsqlite3-0 libsqlite0 sqlite php5-sqlite"
+DEBSQLL="libsqlite3-0 libsqlite0 sqlite php5-sqlite php-db"
 
 case "$db" in
 	sqlite)
