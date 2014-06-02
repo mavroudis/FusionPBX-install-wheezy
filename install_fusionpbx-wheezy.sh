@@ -38,6 +38,10 @@ function use {
 	exit 1
 }
 
+# DEFAULTS
+
+CONFOPT="--prefix=/usr/local/freeswitch"
+
 # OPTIONS CHECKS
 
 if [ $# -lt 2 ]; then
@@ -82,11 +86,7 @@ if [ $EUID -ne 0 ]; then
 	exit
 fi
 
-if [ -z "`which lsb_release`" ]; then
-	apt-get -y install lsb-release
-fi
-
-if [ -z "`lsb_release -c | grep wheezy`" ]; then
+if [ -z "`dpkg -l base-files | grep wheezy`" ]; then
 	echo "This script was inteneded for Debian Wheezy"
 	exit
 fi
@@ -114,6 +114,7 @@ case "$db" in
 		apt-get install -y $DEBBASE $DEBSQLL
 	;;
 	postgresql)
+		CONFOPT="${CONFOPT} --enable-core-pgsql-support"
 		apt-get install -y $DEBBASE $DEBPSQL
 	;;
 esac
