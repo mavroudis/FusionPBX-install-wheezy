@@ -20,6 +20,9 @@ Install FusionBPX from the [official repository](https://code.google.com/p/fusio
         --web=apache for Apache
         --web=nginx for NGINX
 
+###Script Status
+
+This script is currently being developed and is NOT functional.
 
 ###Contributors
 
