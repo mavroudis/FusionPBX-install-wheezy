@@ -93,9 +93,21 @@ fi
 
 # INSTALLING DEBIAN PACKAGES
 
+APACHE="apache2 apache2-mpm-prefork apache2-utils apache2.2-bin apache2.2-common libapache2-mod-php5 libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap"
+NGINX="nginx nginx-full nginx-common php5-fpm php5-common php5-gd php-pear php5-memcache php-apc php5-json libxslt1.1 libgd2-xpm"
+
+case "$web" in
+	apache)
+		apt-get install -y $APACHE
+	;;
+	nginx)
+		apt-get install -y $NGINX
+	;;
+esac
+
 DEBBASE="git-core subversion build-essential autoconf automake libtool libncurses5 libncurses5-dev make libjpeg8-dev pkg-config libcurl4-openssl-dev libexpat1-dev libgnutls-dev libtiff4-dev libx11-dev libssl-dev python2.7-dev zlib1g-dev libzrtpcpp-dev libasound2-dev libogg-dev libvorbis-dev libperl-dev libgdbm-dev libdb-dev python-dev uuid-dev bison ssl-cert"
 DEBPSQL="postgresql-9.1 postgresql-client-9.1 postgresql-client-common postgresql-common libpq5 libpq-dev php5-pgsql"
-DEBSQLL=""
+DEBSQLL="libsqlite3-0 libsqlite0 sqlite php5-sqlite"
 
 case "$db" in
 	sqlite)
