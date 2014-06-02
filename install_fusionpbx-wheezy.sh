@@ -90,3 +90,18 @@ if [ -z "`lsb_release -c | grep wheezy`" ]; then
 	echo "This script was inteneded for Debian Wheezy"
 	exit
 fi
+
+# INSTALLING DEBIAN PACKAGES
+
+DEBBASE="git-core subversion build-essential autoconf automake libtool libncurses5 libncurses5-dev make libjpeg8-dev pkg-config libcurl4-openssl-dev libexpat1-dev libgnutls-dev libtiff4-dev libx11-dev libssl-dev python2.7-dev zlib1g-dev libzrtpcpp-dev libasound2-dev libogg-dev libvorbis-dev libperl-dev libgdbm-dev libdb-dev python-dev uuid-dev bison ssl-cert"
+DEBPSQL="postgresql-9.1 postgresql-client-9.1 postgresql-client-common postgresql-common libpq5 libpq-dev php5-pgsql"
+DEBSQLL=""
+
+case "$db" in
+	sqlite)
+		apt-get install -y $DEBBASE $DEBSQLL
+	;;
+	postgresql)
+		apt-get install -y $DEBBASE $DEBPSQL
+	;;
+esac
