@@ -38,6 +38,8 @@ function use {
 	exit 1
 }
 
+# OPTIONS CHECKS
+
 if [ $# -lt 2 ]; then
 	use
 fi
@@ -61,5 +63,30 @@ if [ -z $(echo $web | egrep '(apache|nginx)') ]; then
 	use
 fi
 
-echo "Database: $db"
-echo "Webserver: $web"
+# CHECK CONNECTIVITY
+
+if [ -n "`ping -c 2 8.8.8.8 | grep '100% packet loss'`" ]; then
+	echo "This script requires internet connectivity"
+	exit
+fi
+
+# SYSTEM UPDATE
+
+apt-get update
+apt-get -y upgrade
+
+# CHECK ENVIRONMENT
+
+if [ $EUID -ne 0 ]; then
+	echo "This script must be run as root"
+	exit
+fi
+
+if [ -z "`which lsb_release`" ]; then
+	apt-get -y install lsb-release
+fi
+
+if [ -z "`lsb_release -c | grep wheezy`" ]; then
+	echo "This script was inteneded for Debian Wheezy"
+	exit
+fi
